@@ -1,5 +1,8 @@
 import * as React from "react";
 import { NavLink } from "react-router-dom"
+import HomeIcon from '@material-ui/icons/Home';
+import MailIcon from '@material-ui/icons/Mail';
+import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 
 class Header extends React.Component<any> {
   public render() {
@@ -7,15 +10,15 @@ class Header extends React.Component<any> {
     return (
       <nav>
         <NavLink to="/" activeStyle={activeStyle} exact>
-          Home
+          <HomeIcon /> Home
         </NavLink>
         {" | "}
-        <NavLink to="/courses" activeStyle={activeStyle}>
-          Courses
+        <NavLink to="/connect" activeStyle={activeStyle}>
+          <MailIcon /> Connect
         </NavLink>
         {" | "}
         <NavLink to="/about" activeStyle={activeStyle}>
-          About
+          <EmojiPeopleIcon /> About
         </NavLink>
       </nav>
     );
