@@ -28,6 +28,15 @@ class Connect extends React.Component<any, ConnectState> {
             .then(res => res.text()
             .then(res => this.setState({apiResponse: res})))
     }
+
+    sendMessage() {
+        const requestOpts = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({firstName: "Alexa", lastName: "Snyder"}) // TODO: hook up to form
+        } 
+        fetch("https://alexasapi.azurewebsites.net/message", requestOpts).then(res => res.json()).then(res => console.log(res));
+    }
     
     componentDidMount() {
         this.callApi();
@@ -44,7 +53,7 @@ class Connect extends React.Component<any, ConnectState> {
                     <TextField id="last-name" label="Last Name" variant="outlined" required />
                     <TextField id="email" label="Email Address" variant="outlined" required error={false} helperText="Please enter a valid email" />
                     <TextField id="inquiry" label="Message" variant="outlined" multiline rows={4} placeholder="Drop me a message!"/>
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" color="primary" onClick={this.sendMessage}>
                         Submit
                     </Button>
                 </form>
