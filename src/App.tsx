@@ -7,18 +7,22 @@ import { Route, Switch } from 'react-router-dom';
 import Connect from './components/connect/Connect';
 import NotFound from './components/notFound/NotFound';
 import Home from './components/home/Home';
+import { ThemeProvider } from '@material-ui/core';
+import theme from './theme'
 
 class App extends React.Component<any> {
   public render() {
     return (
       <div className="App">
-        <Header />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/about" component={About} />
-          <Route exact path="/connect" component={Connect} />
-          <Route component={NotFound} />
-        </Switch>
+        <ThemeProvider theme={theme}>
+          <Header />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/about" component={About} />
+            <Route exact path="/connect" component={Connect} />
+            <Route component={NotFound} />
+          </Switch>
+        </ThemeProvider>
       </div>
     )
   }
