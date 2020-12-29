@@ -1,8 +1,15 @@
 import { Button, createStyles, TextField, Theme, Typography, withStyles } from "@material-ui/core";
 import React from "react";
 
+interface ConnectForm {
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    message?: string;
+}
 interface ConnectState {
-    apiResponse: string;
+    form: ConnectForm;
+    apiResponse?: string;
 }
 
 const styles = (theme: Theme) => 
@@ -20,7 +27,33 @@ const styles = (theme: Theme) =>
 class Connect extends React.Component<any, ConnectState> {
     constructor(props) {
         super(props);
-        this.state = {apiResponse: ""};
+        this.state = {
+            form: {
+                firstName: '',
+                lastName: '',
+                email: '',
+                message: ''
+            }
+        };
+
+        this.handleTextFieldChange = this.handleTextFieldChange.bind(this);
+        this.handleSendMessage = this.handleSendMessage.bind(this);
+    }
+
+    handleTextFieldChange(event) {
+        const formChange = {
+            form: {
+                ...this.state.form,
+                [event.target.id]: event.target.value
+            }
+        }
+        this.setState({...this.state, ...formChange }, () => {
+            console.log(this.state);
+            /**
+             * set state is asynchronous; putting console.log() 
+             * outside of the callback method only logs previous state
+             */
+        });
     }
     
     callApi() {
@@ -29,11 +62,11 @@ class Connect extends React.Component<any, ConnectState> {
             .then(res => this.setState({apiResponse: res})))
     }
 
-    sendMessage() {
+    handleSendMessage() {
         const requestOpts = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({firstName: "Alexa", lastName: "Snyder"}) // TODO: hook up to form
+            body: JSON.stringify(this.state.form)
         } 
         fetch("https://alexasapi.azurewebsites.net/message", requestOpts).then(res => res.json()).then(res => console.log(res));
     }
@@ -49,11 +82,11 @@ class Connect extends React.Component<any, ConnectState> {
                 <Typography variant="h2">Let's Connect!</Typography>
                 <p>{this.state.apiResponse}</p>
                 <form className={classes.root} noValidate autoComplete="off">
-                    <TextField id="first-name" label="First Name" variant="outlined" required />
-                    <TextField id="last-name" label="Last Name" variant="outlined" required />
-                    <TextField id="email" label="Email Address" variant="outlined" required error={false} helperText="Please enter a valid email" />
-                    <TextField id="inquiry" label="Message" variant="outlined" multiline rows={4} placeholder="Drop me a message!"/>
-                    <Button variant="contained" color="primary" onClick={this.sendMessage}>
+                    <TextField id="firstName" label="First Name" onChange={this.handleTextFieldChange} variant="outlined" required />
+                    <TextField id="lastName" label="Last Name" onChange={this.handleTextFieldChange} variant="outlined" required />
+                    <TextField id="email" label="Email Address" onChange={this.handleTextFieldChange} variant="outlined" required error={false} helperText="Please enter a valid email" />
+                    <TextField id="message" label="Message" onChange={this.handleTextFieldChange} variant="outlined" multiline rows={4} placeholder="Drop me a message!"/>
+                    <Button variant="contained" color="primary" onClick={this.handleSendMessage}>
                         Submit
                     </Button>
                 </form>
