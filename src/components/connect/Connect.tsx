@@ -12,6 +12,7 @@ interface ConnectForm {
 }
 interface ConnectState {
     form: ConnectForm;
+    reCAPTCHAValid: boolean;
     apiResponse?: string;
 }
 
@@ -36,7 +37,8 @@ class Connect extends React.Component<any, ConnectState> {
                 lastName: '',
                 email: '',
                 message: ''
-            }
+            },
+            reCAPTCHAValid: false
         };
 
         this.handleTextFieldChange = this.handleTextFieldChange.bind(this);
@@ -67,29 +69,29 @@ class Connect extends React.Component<any, ConnectState> {
     }
 
     onChange(token) {
-        console.log(token);
-    }
-    
-    handleSendMessage() {
-        const recaptchaValue = recaptchaRef.current.getValue();
-        fetch('http://localhost:3001/validaterecaptcha', {
+        fetch('https://alexasapi.azurewebsites.net/validaterecaptcha', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ token: recaptchaValue})
+            body: JSON.stringify({ token: token})
         })
         .then((response: any) => {
             if (response.status == 200) {
-                const requestOpts = {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(this.state.form)
-                } 
-                fetch("https://alexasapi.azurewebsites.net/message", requestOpts)
-                    .then(res => res.json());
+                this.setState({...this.state, reCAPTCHAValid: true});
             }
         })
         .catch((err) => console.error(err))
-        .finally(() => recaptchaRef.current.reset());
+    }
+    
+    handleSendMessage() {
+        const requestOpts = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(this.state.form)
+        } 
+        fetch("https://alexasapi.azurewebsites.net/message", requestOpts)
+            .then(res => res.json())
+            .catch((err) => console.error(err))
+            .finally(() => recaptchaRef.current.reset());
     }
     
     componentDidMount() {
@@ -112,7 +114,7 @@ class Connect extends React.Component<any, ConnectState> {
                         sitekey="6LdWvRkaAAAAANWGqTk1rFczOqDFDmAO53BbB0qx"
                         onChange={this.onChange}
                     />
-                    <Button variant="contained" color="primary" onClick={this.handleSendMessage}>
+                    <Button variant="contained" color="primary" disabled={!this.state.reCAPTCHAValid} onClick={this.handleSendMessage}>
                         Submit
                     </Button>
                 </form>
