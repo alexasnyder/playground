@@ -1,5 +1,8 @@
-import { Button, createStyles, TextField, Theme, Typography, withStyles } from "@material-ui/core";
 import React from "react";
+import { Button, createStyles, TextField, Theme, Typography, withStyles } from "@material-ui/core";
+import ReCAPTCHA from "react-google-recaptcha";
+
+const recaptchaRef: ReCAPTCHA = React.createRef();
 
 interface ConnectForm {
     firstName?: string;
@@ -37,6 +40,7 @@ class Connect extends React.Component<any, ConnectState> {
         };
 
         this.handleTextFieldChange = this.handleTextFieldChange.bind(this);
+        this.onChange = this.onChange.bind(this);
         this.handleSendMessage = this.handleSendMessage.bind(this);
     }
 
@@ -62,13 +66,30 @@ class Connect extends React.Component<any, ConnectState> {
             .then(res => this.setState({apiResponse: res})))
     }
 
+    onChange(token) {
+        console.log(token);
+    }
+    
     handleSendMessage() {
-        const requestOpts = {
+        const recaptchaValue = recaptchaRef.current.getValue();
+        fetch('http://localhost:3001/validaterecaptcha', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(this.state.form)
-        } 
-        fetch("https://alexasapi.azurewebsites.net/message", requestOpts).then(res => res.json()).then(res => console.log(res));
+            body: JSON.stringify({ token: recaptchaValue})
+        })
+        .then((response: any) => {
+            if (response.status == 200) {
+                const requestOpts = {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(this.state.form)
+                } 
+                fetch("https://alexasapi.azurewebsites.net/message", requestOpts)
+                    .then(res => res.json());
+            }
+        })
+        .catch((err) => console.error(err))
+        .finally(() => recaptchaRef.current.reset());
     }
     
     componentDidMount() {
@@ -86,6 +107,11 @@ class Connect extends React.Component<any, ConnectState> {
                     <TextField id="lastName" label="Last Name" onChange={this.handleTextFieldChange} variant="outlined" required />
                     <TextField id="email" label="Email Address" onChange={this.handleTextFieldChange} variant="outlined" required error={false} helperText="Please enter a valid email" />
                     <TextField id="message" label="Message" onChange={this.handleTextFieldChange} variant="outlined" multiline rows={4} placeholder="Drop me a message!"/>
+                    <ReCAPTCHA
+                        ref={recaptchaRef}
+                        sitekey="6LdWvRkaAAAAANWGqTk1rFczOqDFDmAO53BbB0qx"
+                        onChange={this.onChange}
+                    />
                     <Button variant="contained" color="primary" onClick={this.handleSendMessage}>
                         Submit
                     </Button>
