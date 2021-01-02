@@ -18,14 +18,21 @@ interface ConnectState {
 
 const styles = (theme: Theme) => 
     createStyles({
-        root: {
+        form: {
             margin: '0 auto',
-            width: '25%',
+            width: '25rem',
             '& .MuiTextField-root': {
                 display: 'flex',
                 margin: theme.spacing(2),
             }
         },
+        reCaptcha: {
+            display: 'inline-block'
+        },
+        submitBtn: {
+            display: 'flex',
+            margin: '0 auto'
+        }
     });
 
 class Connect extends React.Component<any, ConnectState> {
@@ -104,17 +111,18 @@ class Connect extends React.Component<any, ConnectState> {
             <div>
                 <Typography variant="h2">Let's Connect!</Typography>
                 <p>{this.state.apiResponse}</p>
-                <form className={classes.root} noValidate autoComplete="off">
+                <form className={classes.form} noValidate autoComplete="off">
                     <TextField id="firstName" label="First Name" onChange={this.handleTextFieldChange} variant="outlined" required />
                     <TextField id="lastName" label="Last Name" onChange={this.handleTextFieldChange} variant="outlined" required />
                     <TextField id="email" label="Email Address" onChange={this.handleTextFieldChange} variant="outlined" required error={false} helperText="Please enter a valid email" />
                     <TextField id="message" label="Message" onChange={this.handleTextFieldChange} variant="outlined" multiline rows={4} placeholder="Drop me a message!"/>
                     <ReCAPTCHA
+                        className={classes.reCaptcha}
                         ref={recaptchaRef}
                         sitekey="6LdWvRkaAAAAANWGqTk1rFczOqDFDmAO53BbB0qx"
                         onChange={this.onChange}
                     />
-                    <Button variant="contained" color="primary" disabled={!this.state.reCAPTCHAValid} onClick={this.handleSendMessage}>
+                    <Button className={classes.submitBtn} variant="contained" color="primary" disabled={!this.state.reCAPTCHAValid} onClick={this.handleSendMessage}>
                         Submit
                     </Button>
                 </form>
