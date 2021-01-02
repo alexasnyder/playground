@@ -5,7 +5,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import MailIcon from '@material-ui/icons/Mail';
 import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 import MenuOutlined from '@material-ui/icons/MenuOutlined'
-import { Divider, Drawer, IconButton, List, ListItem, ListItemIcon, makeStyles } from "@material-ui/core";
+import { AppBar, Divider, Drawer, IconButton, List, ListItem, ListItemIcon, makeStyles, Toolbar } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => (
   {
@@ -25,13 +25,56 @@ const useStyles = makeStyles(theme => (
       '&:hover': {
         color: theme.palette.secondary.main
       }
+    },
+    desktop_navLink: {
+      display: 'flex'
     }
   }
 ));
 
 type Anchor = 'left';
 
-export default function Header() {
+const navItemsCollection: any = [
+  {
+    key: 'home',
+    route: '/',
+    name: 'Home',
+    icon: <HomeIcon />
+  },
+  {
+    key: 'connect',
+    route: '/connect',
+    name: 'Connect',
+    icon: <MailIcon />
+  },  {
+    key: 'about',
+    route: '/about',
+    name: 'About',
+    icon: <EmojiPeopleIcon />
+  },
+];
+
+const NavItems = (props) => {
+  const classes = useStyles();
+  return (
+    <List>
+      {navItemsCollection.map(item => {
+        return (
+          <ListItem button key={item.key}>
+            <ListItemIcon>
+              {item.icon}
+            </ListItemIcon>
+            <NavLink className={props.isMobile ? classes.navLink : classes.desktop_navLink} to={item.route} exact>
+              {item.name}
+            </NavLink>
+          </ListItem>
+        )
+      })}
+    </List>
+  )
+}
+
+function MobileHeader() {
   const classes = useStyles();
   const [state, setState] = React.useState({
     left: false,
@@ -60,32 +103,7 @@ export default function Header() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List>
-        <ListItem button key="home">
-          <ListItemIcon>
-            <HomeIcon />
-          </ListItemIcon>
-          <NavLink className={classes.navLink} to="/" exact>
-            Home
-          </NavLink>
-        </ListItem>
-        <ListItem button key="connect">
-          <ListItemIcon>
-            <MailIcon /> 
-          </ListItemIcon>
-          <NavLink className={classes.navLink} to="/connect" exact>
-            Connect
-          </NavLink>
-        </ListItem>
-        <ListItem button key="about">
-          <ListItemIcon>
-            <EmojiPeopleIcon />
-          </ListItemIcon>
-          <NavLink className={classes.navLink} to="/about" exact>
-            About
-          </NavLink>
-        </ListItem>
-      </List>
+      <NavItems isMobile={true}/>
       <Divider />
     </div>
   );
@@ -100,5 +118,22 @@ export default function Header() {
       </Drawer>
     </React.Fragment>
   )  
+}
+
+function DesktopHeader() {
+  return (
+    <AppBar position="static">
+      <Toolbar>
+        <NavItems isMobile={false}/>
+      </Toolbar>
+    </AppBar>
+  )
+}
+
+export default function Header() {
+  return (
+    // <MobileHeader />
+    <DesktopHeader/>
+  )
 }
 
