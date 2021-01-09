@@ -4,8 +4,9 @@ import { NavLink } from "react-router-dom"
 import HomeIcon from '@material-ui/icons/Home';
 import MailIcon from '@material-ui/icons/Mail';
 import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
-import MenuOutlined from '@material-ui/icons/MenuOutlined'
-import { AppBar, Divider, Drawer, IconButton, List, ListItem, ListItemIcon, makeStyles, Toolbar } from "@material-ui/core";
+import MenuOutlined from '@material-ui/icons/MenuOutlined';
+import MediaQuery, {useMediaQuery} from 'react-responsive';
+import { AppBar, Divider, Drawer, IconButton, List, ListItem, ListItemIcon, makeStyles, Toolbar,  } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => (
   {
@@ -62,14 +63,15 @@ const navItemsCollection: any = [
   },
 ];
 
-const NavItems = (props) => {
+const NavItems = () => {
   const classes = useStyles();
+  const isDesktop = useMediaQuery({ query: '(min-device-width: 1224px)'})
   return (
-    <List className={classes.desktopNavBar}>
+    <List className={isDesktop ? classes.desktopNavBar : ''}>
       {navItemsCollection.map(item => {
         return (
           <ListItem button key={item.key}>
-            <NavLink className={props.isMobile ? classes.navLink : classes.desktopNavLink} to={item.route} exact>
+            <NavLink className={isDesktop ? classes.desktopNavLink : classes.navLink } to={item.route} exact>
               <ListItemIcon>
                 {item.icon}
               </ListItemIcon>
@@ -111,7 +113,7 @@ function MobileHeader() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <NavItems isMobile={true}/>
+      <NavItems />
       <Divider />
     </div>
   );
@@ -132,7 +134,7 @@ function DesktopHeader() {
   return (
     <AppBar position="static">
       <Toolbar>
-        <NavItems isMobile={false}/>
+        <NavItems />
       </Toolbar>
     </AppBar>
   )
@@ -140,8 +142,15 @@ function DesktopHeader() {
 
 export default function Header() {
   return (
-    // <MobileHeader />
-    <DesktopHeader/>
+    <React.Fragment>
+      <MediaQuery minDeviceWidth={1224}>
+        <DesktopHeader/>
+      </MediaQuery>
+      <MediaQuery maxDeviceWidth={1224}>
+        <MobileHeader />
+      </MediaQuery>
+      
+    </React.Fragment>
   )
 }
 
