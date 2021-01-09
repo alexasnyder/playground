@@ -23,11 +23,19 @@ const useStyles = makeStyles(theme => (
       textDecoration: 'none',
       color: theme.palette.primary.main,
       '&:hover': {
-        color: theme.palette.secondary.main
+        color: theme.palette.secondary.light
       }
     },
-    desktop_navLink: {
-      display: 'flex'
+    desktopNavLink: {
+      display: 'flex',
+      textDecoration: 'none',
+      color: '#FFF',
+      '&:hover': {
+        color: theme.palette.secondary.light
+      }
+    },
+    desktopNavBar: {
+      display: 'flex',
     }
   }
 ));
@@ -57,14 +65,14 @@ const navItemsCollection: any = [
 const NavItems = (props) => {
   const classes = useStyles();
   return (
-    <List>
+    <List className={classes.desktopNavBar}>
       {navItemsCollection.map(item => {
         return (
           <ListItem button key={item.key}>
             <ListItemIcon>
               {item.icon}
             </ListItemIcon>
-            <NavLink className={props.isMobile ? classes.navLink : classes.desktop_navLink} to={item.route} exact>
+            <NavLink className={props.isMobile ? classes.navLink : classes.desktopNavLink} to={item.route} exact>
               {item.name}
             </NavLink>
           </ListItem>
