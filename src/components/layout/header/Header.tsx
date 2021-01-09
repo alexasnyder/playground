@@ -69,10 +69,10 @@ const NavItems = (props) => {
       {navItemsCollection.map(item => {
         return (
           <ListItem button key={item.key}>
-            <ListItemIcon>
-              {item.icon}
-            </ListItemIcon>
             <NavLink className={props.isMobile ? classes.navLink : classes.desktopNavLink} to={item.route} exact>
+              <ListItemIcon>
+                {item.icon}
+              </ListItemIcon>
               {item.name}
             </NavLink>
           </ListItem>
