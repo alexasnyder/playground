@@ -5,6 +5,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Router } from 'react-router-dom';
 import history from './services/history';
+import ReactGA from 'react-ga';
+
+ReactGA.initialize('UA-192468056-1');
 
 ReactDOM.render(
   <React.StrictMode>
