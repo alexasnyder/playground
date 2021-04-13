@@ -1,9 +1,6 @@
 import * as React from 'react';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import theme from '../../theme';
-import ReactGA from 'react-ga';
-
-ReactGA.pageview('About');
 
 const useStyles = makeStyles({
     header: {

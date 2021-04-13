@@ -1,9 +1,6 @@
 import React from "react";
 import { Button, createStyles, TextField, Theme, Typography, withStyles } from "@material-ui/core";
 import ReCAPTCHA from "react-google-recaptcha";
-import ReactGA from 'react-ga';
-
-ReactGA.pageview('Connect');
 
 const recaptchaRef: ReCAPTCHA = React.createRef();
 

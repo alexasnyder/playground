@@ -1,8 +1,5 @@
 import { Typography } from '@material-ui/core';
 import * as React from 'react';
-import ReactGA from 'react-ga';
-
-ReactGA.pageview('Home');
 class Home extends React.Component<any> {
     public render() {
         return (
