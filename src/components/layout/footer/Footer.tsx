@@ -28,22 +28,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Footer() {
     const classes = useStyles();
-    let width;
-
-    useEffect(() => {
-      window.addEventListener('resize', () => {
-        width  = window.innerWidth;
-        console.log('my width :::', width)
-     })
-    },[window])
-
-    function appBarPosition() {
-      return window.innerWidth > 1224 ? "fixed" : "sticky";
-    }
 
     return (
       <React.Fragment>
-          <AppBar position={appBarPosition()} color="primary" className={classes.appBar}>
+          <AppBar position="fixed" color="primary" className={classes.appBar}>
             <div>
               <IconButton>
                 <a href="https://www.instagram.com/alexamsnyder/" target="_blank" className={classes.iconLink}>
