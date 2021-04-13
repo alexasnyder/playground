@@ -1,15 +1,15 @@
-import './App.css';
-import * as React from 'react';
-import Header from './components/layout/header/Header';
-import Footer from './components/layout/footer/Footer';
-import About from './components/about/About';
-import { Route, Switch } from 'react-router-dom';
-import Connect from './components/connect/Connect';
-import NotFound from './components/notFound/NotFound';
-import Home from './components/home/Home';
 import { Container, ThemeProvider } from '@material-ui/core';
-import theme from './theme'
+import * as React from 'react';
 import DocumentMeta from 'react-document-meta';
+import { Route, Switch } from 'react-router-dom';
+import './App.css';
+import About from './components/about/About';
+import Connect from './components/connect/Connect';
+import Home from './components/home/Home';
+import Footer from './components/layout/footer/Footer';
+import Header from './components/layout/header/Header';
+import NotFound from './components/notFound/NotFound';
+import theme from './theme';
 
 class App extends React.Component<any> {
   public render() {
