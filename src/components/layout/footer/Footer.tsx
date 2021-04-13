@@ -1,8 +1,7 @@
-import { AppBar, Button, IconButton, makeStyles, Paper } from "@material-ui/core";
+import { AppBar, IconButton, makeStyles, Paper } from "@material-ui/core";
 import InstagramIcon from '@material-ui/icons/Instagram';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
