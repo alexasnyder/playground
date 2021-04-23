@@ -21,6 +21,7 @@ const useStyles = makeStyles(theme => (
       display: 'flex'
     },
     navLink: {
+      fontFamily: 'GeosansLight',
       textDecoration: 'none',
       color: theme.palette.primary.main,
       '&:hover': {
@@ -28,6 +29,7 @@ const useStyles = makeStyles(theme => (
       }
     },
     desktopNavLink: {
+      fontFamily: 'GeosansLight',
       display: 'flex',
       textDecoration: 'none',
       color: '#FFF',

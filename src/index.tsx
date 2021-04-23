@@ -1,13 +1,13 @@
+import GA4React from 'ga-4-react';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 import { Router } from 'react-router-dom';
+import App from './App';
+import './index.css';
 import history from './services/history';
-import GA4React, {useGA4React} from 'ga-4-react';
 
 const ga4react = new GA4React("G-RTQCDE3CFS");
+
 
 (async () => {
   await ga4react.initialize().then(ga => {

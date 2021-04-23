@@ -8,6 +8,7 @@ const theme = createMuiTheme({
     warning: { light: orange[300], main: orange[500], dark: orange[700] }
   },
   typography: {
+    fontFamily: 'GeosansLight',
     h2: {
       fontSize: '3rem'
     },

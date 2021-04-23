@@ -42,8 +42,6 @@ export default function About() {
                 </Typography>
                 </Grid>
             </Grid>
-            
-            
         </div>
     )
 };

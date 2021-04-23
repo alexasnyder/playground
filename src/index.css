@@ -1,22 +1,18 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face {
+  font-family: 'Mermaid';
+  src: local('Mermaid'), url(./assets/fonts/Mermaid.ttf) format('truetype');
 }
 
-/* #app {
-  max-width: 850px;
-  margin: 0 auto;
+@font-face {
+  font-family: 'MermaidSwash';
+  src: local('Mermaid_Swash'), url(./assets/fonts/Mermaid_Swash.ttf) format('truetype');
 }
 
-nav {
-  padding: 20px 0 20px 0;
-} */
+@font-face {
+  font-family: 'GeosansLight';
+  src: local('GeosansLight'), url(./assets/fonts/GeosansLight.ttf) format('truetype');
+}
