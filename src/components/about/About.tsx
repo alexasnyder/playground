@@ -4,6 +4,7 @@ import theme from '../../theme';
 
 const useStyles = makeStyles({
     header: {
+        fontFamily: 'Mermaid',
         margin: theme.spacing(2)
     },
     body: {
@@ -26,7 +27,6 @@ export default function About() {
                     <img className={classes.image} src={'me.jpg'} alt="me"/>
                 </Grid>
                 <Grid item xs={12} sm={8} md={10}>
-                <Typography variant="h3" className={classes.header}>My name is Alexa Snyder and I'm a Senior Developer</Typography>
                 <Typography className={classes.body}>
                     My interest in development began during my short stint as a technical recruiter. 
                     After being introduced to many developers, I became interested in the work they did. 

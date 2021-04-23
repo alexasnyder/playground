@@ -18,6 +18,10 @@ interface ConnectState {
 
 const styles = (theme: Theme) => 
     createStyles({
+        header: {
+            fontFamily: 'Mermaid',
+            margin: theme.spacing(2)
+        },
         form: {
             margin: '0 auto',
             width: '25rem',
@@ -109,7 +113,7 @@ class Connect extends React.Component<any, ConnectState> {
         const { classes } = this.props;
         return (
             <div>
-                <Typography variant="h2">Let's Connect!</Typography>
+                <Typography variant="h2" className={classes.header}>Let's Connect!</Typography>
                 <p>{this.state.apiResponse}</p>
                 <form className={classes.form} noValidate autoComplete="off">
                     <TextField id="firstName" label="First Name" onChange={this.handleTextFieldChange} variant="outlined" required />
